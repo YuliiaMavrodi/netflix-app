@@ -5,7 +5,6 @@ import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 import {FirebaseContext} from '../context/firebase';
 import FooterContainer from './footer';
-import {useFavContent} from "../hooks";
 
 export default function BrowseContainer({user, slides}) {
     // const category = 'series'
