@@ -10,7 +10,7 @@ import {
     FeatureTitle,
     FeatureText,
     FeatureClose,
-    Maturity,
+    Rating,
     Content,
     Meta,
     Entities,
@@ -20,12 +20,17 @@ import {
     LikeIconActive,
     LikeIconInactive
 } from './styles/card';
-// import {addFavouriteShow} from "../../utils";
+
+export const FeatureContext = createContext();
 
 export default function Card({children, ...restProps}) {
+    const [showFeature, setShowFeature] = useState(false);
+    const [itemFeature, setItemFeature] = useState({});
 
     return (
-        <Container {...restProps}>{children}</Container>
+        <FeatureContext.Provider value={{showFeature, setShowFeature, itemFeature, setItemFeature}}>
+            <Container {...restProps}>{children}</Container>
+        </FeatureContext.Provider>
     );
 }
 
@@ -55,10 +60,14 @@ Card.Meta = function CardMeta({children, ...restProps}) {
 
 
 Card.Item = function CardItem({item, children, ...restProps}) {
+    const {setShowFeature, setItemFeature} = useContext(FeatureContext);
 
     return (
         <Item
-
+            onClick={() => {
+                setItemFeature(item);
+                setShowFeature(true);
+            }}
             {...restProps}
         >
             {children}
@@ -70,15 +79,16 @@ Card.Image = function CardImage({...restProps}) {
     return <Image {...restProps} />;
 };
 
-Card.Like = function CardLike({setLikeActive, itemShow, itemShowId, setItemShow, setItemShowId}) {
+Card.Like = function CardLike({setLikeActive, itemShow, itemShowId, setItemShow, setItemShowId, ...restProps}) {
     const [selfLikeActive, setSelfLikeActive] = useState(false);
     return (
-        <Like onClick={() => {
-            setSelfLikeActive((selfLikeActive) => !selfLikeActive)
-            setLikeActive((selfLikeActive) => !selfLikeActive)
-            setItemShow(itemShow)
-            setItemShowId(itemShowId)
-        }}
+        <Like {...restProps}
+              onClick={() => {
+                  setSelfLikeActive((selfLikeActive) => !selfLikeActive)
+                  setLikeActive((selfLikeActive) => !selfLikeActive)
+                  setItemShow(itemShow)
+                  setItemShowId(itemShowId)
+              }}
 
         >
 
@@ -95,4 +105,32 @@ Card.Like = function CardLike({setLikeActive, itemShow, itemShowId, setItemShow,
     );
 };
 
+Card.Feature = function CardFeature({children, category, ...restProps}) {
+    const {showFeature, itemFeature, setShowFeature} = useContext(FeatureContext);
+
+    return showFeature ? (
+        <Feature {...restProps}>
+            <Content>
+                <FeatureTitle>{itemFeature.name}</FeatureTitle>
+                <FeatureText>{itemFeature.summary.replace(/<p>/g, '')
+                    .replace(/<\/p>/g, '')
+                    .replace(/<b>/g, '')
+                    .replace(/<\/b>/g, '')}
+                </FeatureText>
+                <FeatureClose onClick={() => setShowFeature(false)}>
+                    <img src="/images/icons/close.png" alt="Close"/>
+                </FeatureClose>
+
+                <Group margin="30px 0" flexDirection="row" alignItems="center">
+                    <Rating rating={itemFeature.rating?.average}>{itemFeature.rating?.average}</Rating>
+                    <FeatureText fontWeight="bold">
+                        {itemFeature.genres.join(' - ')}
+                    </FeatureText>
+                </Group>
+
+                {children}
+            </Content>
+        </Feature>
+    ) : null;
+};
 

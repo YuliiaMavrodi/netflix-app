@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import Fuse from 'fuse.js';
 import {Card, Header} from '../components';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
@@ -7,17 +6,13 @@ import {FirebaseContext} from '../context/firebase';
 import FooterContainer from './footer';
 
 export default function BrowseContainer({user, slides}) {
-    // const category = 'series'
     const [category, setCategory] = useState('shows');
     const [slideRows, setSlideRows] = useState([]);
-
     const [likeActive, setLikeActive] = useState(false);
     const [itemShow, setItemShow] = useState({});
     const [itemShowId, setItemShowId] = useState(null);
 
-
     const {firebase} = useContext(FirebaseContext);
-    // const user = firebase.auth().currentUser || {};
 
     useEffect(() => {
         setSlideRows(slides[category]);
@@ -91,17 +86,15 @@ export default function BrowseContainer({user, slides}) {
     }
 
 
-useEffect(() => {
-    console.log('itemShow', itemShow)
-    console.log('itemShowId', itemShowId)
-    likeActive ?
-        addFavouriteShow(itemShow, itemShowId) :
-        deleteFavouriteShow(itemShow, itemShowId)
+    useEffect(() => {
+        likeActive ?
+            addFavouriteShow(itemShow, itemShowId) :
+            deleteFavouriteShow(itemShow, itemShowId)
 
-}, [likeActive, itemShow, itemShowId])
+    }, [likeActive, itemShow, itemShowId])
     return <>
 
-        <Header src="joker1" dontShowOnSmallViewPort>
+        <Header src="house-of-cards" dontShowOnSmallViewPort>
             <Header.Frame>
                 <Header.Group>
                     <Header.Logo to={ROUTES.HOME} src={logo} alt="Netflix"/>
@@ -110,7 +103,7 @@ useEffect(() => {
                         Shows
                     </Header.TextLink>
                     <Header.TextLink active={category === 'favourite' ? 'true' : 'false'}
-                                     onClick={() => setCategory('favourite')} >
+                                     onClick={() => setCategory('favourite')}>
                         Favourite
                     </Header.TextLink>
                 </Header.Group>
@@ -131,13 +124,13 @@ useEffect(() => {
             </Header.Frame>
 
             <Header.Feature>
-                <Header.FeatureCallOut>Watch Joker Now</Header.FeatureCallOut>
+                <Header.FeatureCallOut>Watch House Of Card Now</Header.FeatureCallOut>
                 <Header.Text>
-                    Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks the streets of
-                    Gotham
-                    City. Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he
-                    projects in a
-                    futile attempt to feel like he`s part of the world around him.
+                    Based on the BBC miniseries of the same name, House of Cards follows Francis Underwood, the
+                    politician`s politician – masterful, beguiling, charismatic and ruthless. He and his equally
+                    ambitious wife Claire will stop at nothing to ensure their ascendancy. This wicked political drama
+                    slithers beneath the curtain and through the back halls of greed, sex, love and corruption in modern
+                    Washington D.C.
                 </Header.Text>
                 <Header.PlayButton>Play</Header.PlayButton>
             </Header.Feature>
@@ -164,7 +157,7 @@ useEffect(() => {
                             </Card.Item>
                         ))}
                     </Card.Entities>
-
+                    <Card.Feature category={category}/>
                 </Card>
             ))}
         </Card.Group>

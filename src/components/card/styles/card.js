@@ -160,12 +160,8 @@ export const FeatureText = styled.p`
 export const Feature = styled.div`
   display: flex;
   flex-direction: row;
-  background: url(${({src}) => src});
-  background-size: contain;
   position: relative;
   height: 360px;
-  background-position-x: right;
-  background-repeat: no-repeat;
   background-color: black;
 
   @media (max-width: 1000px) {
@@ -205,7 +201,7 @@ export const FeatureClose = styled.button`
 
 export const Content = styled.div`
   margin: 56px;
-  max-width: 500px;
+  max-width: 1000px;
   line-height: normal;
 
   @media (max-width: 1000px) {
@@ -214,8 +210,9 @@ export const Content = styled.div`
   }
 `;
 
-export const Maturity = styled.div`
-  background-color: ${({rating}) => (rating >= 15 ? '#f44336' : '#2f9600')};
+export const Rating = styled.div`
+  background-color: ${({rating}) => (rating >= 8 ? '#2f9600' : '#f44336')};
+  background-color: ${({rating}) => (rating >= 5 ? (rating >= 8 ? '#2f9600' : '#F67336') : '#f44336')};
   border-radius: 15px;
   width: 28px;
   line-height: 28px;

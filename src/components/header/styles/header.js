@@ -67,42 +67,10 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const Search = styled.div`
-  display: flex;
-  align-items: center;
-
-  svg {
-    color: white;
-    cursor: pointer;
-  }
-
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-
-export const SearchIcon = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-  height: 32px;
-  width: 32px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    filter: brightness(0) invert(1);
-    width: 16px;
-  }
-`;
-
 export const ButtonLink = styled(ReachRouterLink)`
   display: block;
   background-color: #e50914;
-  width: 84px;
+  width: 54px;
   height: fit-content;
   color: white;
   border: 0;
@@ -183,7 +151,7 @@ export const Profile = styled.div`
 `;
 
 export const Feature = styled(Container)`
-  padding: 150px 0 500px 0;
+  padding: 500px 0 350px 0;
   flex-direction: column;
   align-items: normal;
   width: 50%;

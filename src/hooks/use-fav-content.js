@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
 import { FirebaseContext } from '../context/firebase';
-import { auth } from "firebase/app";
 
 export default function useContent(user) {
     const [content, setContent] = useState([]);
